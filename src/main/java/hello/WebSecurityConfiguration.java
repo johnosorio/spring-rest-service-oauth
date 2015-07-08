@@ -46,11 +46,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		return super.authenticationManagerBean();
 	}
         
-        @Override
+        /*@Override
         protected void configure(HttpSecurity http) throws Exception {
             http
                .authorizeRequests()
                .antMatchers(HttpMethod.GET, "/oauth/token").permitAll();
-        }
+        }*/
 
 }
