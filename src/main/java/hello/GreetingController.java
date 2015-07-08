@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class GreetingController {
+    
 
 	private static final String template = "Hello, %s!";
 	
@@ -33,7 +34,12 @@ public class GreetingController {
 
 	@RequestMapping("/greeting")
 	public Greeting greeting(@AuthenticationPrincipal User user) {
-		return new Greeting(counter.incrementAndGet(), String.format(template, user.getName()));
+                System.out.println("JJOC User: " + user);
+                if( user != null ) {
+                    return new Greeting(counter.incrementAndGet(), String.format(template, user.getName() ));
+                } else {
+                    return new Greeting(counter.incrementAndGet(), String.format(template, "App" ) + user);
+                }
 	}
 
 }

@@ -34,6 +34,10 @@ import org.springframework.util.Base64Utils;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.hamcrest.Matchers.*;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -42,8 +46,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author Roy Clarkson
  */
 @RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = Application.class)
+// Enable JMX so we can test the MBeans (you can't do this in a properties file)
+@TestPropertySource(properties = { "spring.jmx.enabled:true",
+		"spring.datasource.jmx-enabled:true" })
+@ActiveProfiles("scratch")
 public class GreetingControllerTest {
 
 	@Autowired
@@ -102,13 +110,15 @@ public class GreetingControllerTest {
 				.andReturn().getResponse().getContentAsString();
 
 		// @formatter:on
-
+                System.out.println("JJOC Content " + content);
 		return content.substring(17, 53);
 	}
 
 	@Test
 	public void greetingAuthorized() throws Exception {
 		String accessToken = getAccessToken("roy", "spring");
+                
+                System.out.println("JJOC AccessToken: " + accessToken);
 
 		// @formatter:off
 		mvc.perform(get("/greeting")
