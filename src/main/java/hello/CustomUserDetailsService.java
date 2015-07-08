@@ -40,6 +40,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+                System.out.println("JJOC LOAD USER: " + username);
 		User user = userRepository.findByLogin(username);
 		if (user == null) {
 			throw new UsernameNotFoundException(String.format("User %s does not exist!", username));

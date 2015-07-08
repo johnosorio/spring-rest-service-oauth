@@ -112,7 +112,7 @@ public class OAuth2ServerConfiguration {
                     .and()
                     .withClient("curl")
                     .authorizedGrantTypes("client_credentials")
-                    .authorities("USER", "ADMIN")
+                    .authorities("ROLE_USER", "ROLE_ADMIN")
                     .scopes("read", "write")
                     .resourceIds(RESOURCE_ID)
                     .secret("password");
