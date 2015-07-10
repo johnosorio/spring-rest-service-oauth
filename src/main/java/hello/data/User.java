@@ -33,8 +33,10 @@ import javax.persistence.ManyToMany;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="\"user\"")
 public class User {
 
 	@Id
@@ -53,7 +55,7 @@ public class User {
 
 	@JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
+	@JoinTable(name = "\"user_role\"", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
 	private Set<Role> roles = new HashSet<Role>();
 
 	public User() {

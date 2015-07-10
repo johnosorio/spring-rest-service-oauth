@@ -15,6 +15,7 @@
  */
 package hello;
 
+import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -23,16 +24,20 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
 @Configuration
 public class OAuth2ServerConfiguration {
@@ -42,11 +47,14 @@ public class OAuth2ServerConfiguration {
     @Configuration
     @EnableResourceServer
     protected static class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
-        
+
+        @Autowired
+        private TokenStore tokenStore;
+
         @Override
         public void configure(ResourceServerSecurityConfigurer resources) {
             // @formatter:off
-            resources.resourceId(RESOURCE_ID);
+            resources.resourceId(RESOURCE_ID).tokenStore(tokenStore);
             // @formatter:on
         }
 
@@ -71,15 +79,18 @@ public class OAuth2ServerConfiguration {
     @EnableAuthorizationServer
     protected static class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
-        //public static TokenStore tokenStore = new InMemoryTokenStore();
         @Autowired
-         private TokenStore tokenStore;
+        private DataSource dataSource;
+
+        @Autowired
+        private TokenStore tokenStore;
 
         @Bean
-         public TokenStore tokenStore() {
+        public TokenStore tokenStore() {
             return new InMemoryTokenStore();
-         }
-         
+            //return new JdbcTokenStore(dataSource);
+        }
+
         @Autowired
         @Qualifier("authenticationManagerBean")
         private AuthenticationManager authenticationManager;
@@ -101,7 +112,7 @@ public class OAuth2ServerConfiguration {
         @Override
         public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
             // @formatter:off
-            clients
+            /*clients.jdbc(dataSource)
                     .inMemory()
                     .withClient("clientapp")
                     .authorizedGrantTypes("password", "refresh_token")
@@ -109,13 +120,16 @@ public class OAuth2ServerConfiguration {
                     .scopes("read", "write")
                     .resourceIds(RESOURCE_ID)
                     .secret("123456")
+                    .accessTokenValiditySeconds(3600)
                     .and()
                     .withClient("curl")
                     .authorizedGrantTypes("client_credentials")
                     .authorities("ROLE_USER", "ROLE_ADMIN")
                     .scopes("read", "write")
                     .resourceIds(RESOURCE_ID)
-                    .secret("password");
+                    .secret("password")
+                    .accessTokenValiditySeconds(3600);*/
+            clients.jdbc(dataSource);
             // @formatter:on
         }
 

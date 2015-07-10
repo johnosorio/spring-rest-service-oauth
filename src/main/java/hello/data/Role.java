@@ -30,8 +30,10 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="\"role\"")
 public class Role implements GrantedAuthority {
 
 	private static final long serialVersionUID = 1L;

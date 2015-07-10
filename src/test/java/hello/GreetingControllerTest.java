@@ -103,7 +103,7 @@ public class GreetingControllerTest {
 				.andExpect(jsonPath("$.access_token", is(notNullValue())))
 				.andExpect(jsonPath("$.token_type", is(equalTo("bearer"))))
 				.andExpect(jsonPath("$.refresh_token", is(notNullValue())))
-				.andExpect(jsonPath("$.expires_in", is(greaterThan(4000))))
+				.andExpect(jsonPath("$.expires_in", is(greaterThan(50))))
 				.andExpect(jsonPath("$.scope", is(equalTo("read write"))))
 				.andReturn().getResponse().getContentAsString();
 
