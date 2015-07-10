@@ -34,6 +34,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.approval.ApprovalStore;
+import org.springframework.security.oauth2.provider.approval.JdbcApprovalStore;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
@@ -62,12 +64,12 @@ public class OAuth2ServerConfiguration {
         public void configure(HttpSecurity http) throws Exception {
             // @formatter:off
             http.authorizeRequests()
-                    .antMatchers(HttpMethod.GET, "/oauth/**").access("#oauth2.hasScope('read')")
+                    /*.antMatchers(HttpMethod.GET, "/oauth/**").access("#oauth2.hasScope('read')")
                     .antMatchers(HttpMethod.OPTIONS, "/oauth/**").access("#oauth2.hasScope('read')")
                     .antMatchers(HttpMethod.POST, "/oauth/**").access("#oauth2.hasScope('write')")
                     .antMatchers(HttpMethod.PUT, "/oauth/**").access("#oauth2.hasScope('write')")
                     .antMatchers(HttpMethod.PATCH, "/oauth/**").access("#oauth2.hasScope('write')")
-                    .antMatchers(HttpMethod.DELETE, "/oauth/**").access("#oauth2.hasScope('write')")
+                    .antMatchers(HttpMethod.DELETE, "/oauth/**").access("#oauth2.hasScope('write')")*/
                     .antMatchers("/users").hasRole("ADMIN")
                     .antMatchers("/greeting").authenticated();
             // @formatter:on
@@ -87,8 +89,13 @@ public class OAuth2ServerConfiguration {
 
         @Bean
         public TokenStore tokenStore() {
-            return new InMemoryTokenStore();
-            //return new JdbcTokenStore(dataSource);
+            //return new InMemoryTokenStore();
+            return new MyJdbcTokenStore(dataSource);
+        }
+        
+        @Bean
+        public ApprovalStore approvalStore() {
+            return new JdbcApprovalStore(dataSource);
         }
 
         @Autowired
@@ -105,6 +112,7 @@ public class OAuth2ServerConfiguration {
             endpoints
                     .tokenStore(this.tokenStore)
                     .authenticationManager(this.authenticationManager)
+                    .approvalStore(approvalStore())
                     .userDetailsService(userDetailsService);
             // @formatter:on
         }

@@ -74,8 +74,7 @@ public class GreetingControllerTest {
 	@Test
 	public void greetingUnauthorized() throws Exception {
 		// @formatter:off
-		mvc.perform(get("/greeting")
-				.accept(MediaType.APPLICATION_JSON))
+		mvc.perform(get("/greeting").accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isUnauthorized())
 				.andExpect(jsonPath("$.error", is("unauthorized")));
 		// @formatter:on
@@ -90,8 +89,7 @@ public class GreetingControllerTest {
 				.perform(
 						post("/oauth/token")
 								.header("Authorization", authorization)
-								.contentType(
-										MediaType.APPLICATION_FORM_URLENCODED)
+								.contentType(MediaType.APPLICATION_FORM_URLENCODED)
 								.param("username", username)
 								.param("password", password)
 								.param("grant_type", "password")
