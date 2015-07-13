@@ -23,11 +23,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -40,8 +37,6 @@ import org.springframework.security.oauth2.provider.approval.ApprovalStore;
 import org.springframework.security.oauth2.provider.approval.JdbcApprovalStore;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
-import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
 @Configuration
 public class OAuth2ServerConfiguration {
@@ -91,7 +86,6 @@ public class OAuth2ServerConfiguration {
 
         @Bean
         public TokenStore tokenStore() {
-            //return new InMemoryTokenStore();
             return new MyJdbcTokenStore(dataSource);
         }
         
@@ -108,11 +102,9 @@ public class OAuth2ServerConfiguration {
         private CustomUserDetailsService userDetailsService;
 
         @Override
-        public void configure(AuthorizationServerEndpointsConfigurer endpoints)
-                throws Exception {
+        public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
             // @formatter:off
-            endpoints
-                    .tokenStore(this.tokenStore)
+            endpoints.tokenStore(this.tokenStore)
                     .authenticationManager(this.authenticationManager)
                     .approvalStore(approvalStore())
                     .userDetailsService(userDetailsService);
@@ -127,23 +119,6 @@ public class OAuth2ServerConfiguration {
         @Override
         public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
             // @formatter:off
-            /*clients.jdbc(dataSource)
-                    .inMemory()
-                    .withClient("clientapp")
-                    .authorizedGrantTypes("password", "refresh_token")
-                    .authorities("USER")
-                    .scopes("read", "write")
-                    .resourceIds(RESOURCE_ID)
-                    .secret("123456")
-                    .accessTokenValiditySeconds(3600)
-                    .and()
-                    .withClient("curl")
-                    .authorizedGrantTypes("client_credentials")
-                    .authorities("ROLE_USER", "ROLE_ADMIN")
-                    .scopes("read", "write")
-                    .resourceIds(RESOURCE_ID)
-                    .secret("password")
-                    .accessTokenValiditySeconds(3600);*/
             clients.jdbc(dataSource);
             // @formatter:on
         }
