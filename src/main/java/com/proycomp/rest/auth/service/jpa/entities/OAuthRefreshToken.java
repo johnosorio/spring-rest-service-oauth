@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hello.data;
+package com.proycomp.rest.auth.service.jpa.entities;
 
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -16,27 +16,42 @@ import javax.persistence.Table;
  * @author josorio2
  */
 @Entity
-@Table(name="\"oauth_code\"")
-public class OAuthCode implements Serializable {
+@Table(name="\"oauth_refresh_token\"")
+public class OAuthRefreshToken implements Serializable {
     @Id
     @Column(length = 256)
-    private String code;
+    private String token_id;
+    private byte[] token;
     private byte[] authentication;
     
-    public OAuthCode() {}
+    public OAuthRefreshToken(){}
 
     /**
-     * @return the code
+     * @return the token_id
      */
-    public String getCode() {
-        return code;
+    public String getToken_id() {
+        return token_id;
     }
 
     /**
-     * @param code the code to set
+     * @param token_id the token_id to set
      */
-    public void setCode(String code) {
-        this.code = code;
+    public void setToken_id(String token_id) {
+        this.token_id = token_id;
+    }
+
+    /**
+     * @return the token
+     */
+    public byte[] getToken() {
+        return token;
+    }
+
+    /**
+     * @param token the token to set
+     */
+    public void setToken(byte[] token) {
+        this.token = token;
     }
 
     /**
@@ -52,5 +67,6 @@ public class OAuthCode implements Serializable {
     public void setAuthentication(byte[] authentication) {
         this.authentication = authentication;
     }
+    
     
 }

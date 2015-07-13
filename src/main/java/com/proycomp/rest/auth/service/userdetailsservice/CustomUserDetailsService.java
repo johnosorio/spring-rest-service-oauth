@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package hello;
+package com.proycomp.rest.auth.service.userdetailsservice;
 
 import java.util.Collection;
 
-import hello.data.User;
-import hello.data.UserRepository;
+import com.proycomp.rest.auth.service.jpa.entities.User;
+import com.proycomp.rest.auth.service.jpa.entities.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package hello;
+package com.proycomp.rest.auth.service.web.security;
 
+import com.proycomp.rest.auth.service.userdetailsservice.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

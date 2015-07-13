@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package hello;
+package com.proycomp.rest.auth.service.controller;
 
-import hello.data.User;
+import com.proycomp.rest.auth.service.dto.Greeting;
+import com.proycomp.rest.auth.service.jpa.entities.User;
 
 import java.util.concurrent.atomic.AtomicLong;
 

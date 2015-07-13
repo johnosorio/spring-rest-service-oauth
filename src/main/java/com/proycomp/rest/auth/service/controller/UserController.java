@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 the original author or authors.
+ * Copyright 2014-2015 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,28 @@
  * limitations under the License.
  */
 
-package hello;
+package com.proycomp.rest.auth.service.controller;
 
+import com.proycomp.rest.auth.service.jpa.entities.User;
+import com.proycomp.rest.auth.service.jpa.entities.UserRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class HomeController {
+public class UserController {
 
-	@RequestMapping("/")
-	public String home() {
-		return "home";
+	private final UserRepository userRepository;
+
+	@Autowired
+	public UserController(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+
+	@RequestMapping("/users")
+	public Iterable<User> getUsers() {
+		return userRepository.findAll();
 	}
 
 }

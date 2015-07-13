@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hello.data;
+package com.proycomp.rest.auth.service.jpa.entities;
 
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -11,30 +11,25 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ *
+ * @author josorio2
+ */
 @Entity
-@Table(name="\"oauth_access_token\"")
-public class OAuthAccessToken implements Serializable {
+@Table(name="\"oauth_client_token\"")
+public class OAuthClientToken implements Serializable {
     @Id
     @Column(length = 256)
     private String token_id;
-    
     private byte[] token;
-    
     @Column(length = 256)
     private String authentication_id;
-    
     @Column(length = 256)
     private String user_name;
-    
     @Column(length = 256)
     private String client_id;
     
-    private byte[] authentication;
-    
-    @Column(length = 256)
-    private String refresh_token;
-    
-    public OAuthAccessToken() {}
+    public OAuthClientToken() {}
 
     /**
      * @return the token_id
@@ -105,33 +100,6 @@ public class OAuthAccessToken implements Serializable {
     public void setClient_id(String client_id) {
         this.client_id = client_id;
     }
-
-    /**
-     * @return the authentication
-     */
-    public byte[] getAuthentication() {
-        return authentication;
-    }
-
-    /**
-     * @param authentication the authentication to set
-     */
-    public void setAuthentication(byte[] authentication) {
-        this.authentication = authentication;
-    }
-
-    /**
-     * @return the refresh_token
-     */
-    public String getRefresh_token() {
-        return refresh_token;
-    }
-
-    /**
-     * @param refresh_token the refresh_token to set
-     */
-    public void setRefresh_token(String refresh_token) {
-        this.refresh_token = refresh_token;
-    }
+    
     
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package hello.data;
+package com.proycomp.rest.auth.service.jpa.entities;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hello;
+package com.proycomp.rest.auth.service.utils;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -11,7 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  *
  * @author josorio2
  */
-public class AppLocal {
+public class PasswordEncoderUtil {
     /*public static void main(String[] args) {
         String password = "spring";
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
