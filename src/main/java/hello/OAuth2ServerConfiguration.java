@@ -116,6 +116,11 @@ public class OAuth2ServerConfiguration {
                     .userDetailsService(userDetailsService);
             // @formatter:on
         }
+        
+        @Override
+        public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
+            oauthServer.allowFormAuthenticationForClients();
+        }
 
         @Override
         public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
