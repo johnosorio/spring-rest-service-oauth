@@ -14,8 +14,10 @@
  * limitations under the License.
  */
 
-package hello;
+package com.proycomp.rest.auth.service.controller;
 
+import com.proycomp.rest.auth.service.Application;
+import com.proycomp.rest.auth.service.controller.HomeController;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -42,7 +44,7 @@ import org.springframework.web.context.WebApplicationContext;
 /**
  * @author Roy Clarkson
  */
-/*@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 // Enable JMX so we can test the MBeans (you can't do this in a properties file)
@@ -80,4 +82,4 @@ public class HomeControllerTest {
 		// @formatter:on
 	}
 
-}*/
+}
