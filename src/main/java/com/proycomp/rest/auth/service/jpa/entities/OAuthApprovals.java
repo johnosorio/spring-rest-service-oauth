@@ -19,7 +19,7 @@ import javax.persistence.Table;
  */
 @Entity 
 @IdClass(OAuthApprovalsId.class)
-@Table(name="\"oauth_approvals\"")
+@Table(name="oauth_approvals")
 public class OAuthApprovals implements Serializable {
     @Id
     @Column(length = 256)

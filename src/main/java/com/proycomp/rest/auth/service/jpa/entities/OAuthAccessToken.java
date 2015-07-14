@@ -9,15 +9,17 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="\"oauth_access_token\"")
+@Table(name="oauth_access_token")
 public class OAuthAccessToken implements Serializable {
     @Id
     @Column(length = 256)
     private String token_id;
     
+    @Lob
     private byte[] token;
     
     @Column(length = 256)
@@ -29,6 +31,7 @@ public class OAuthAccessToken implements Serializable {
     @Column(length = 256)
     private String client_id;
     
+    @Lob
     private byte[] authentication;
     
     @Column(length = 256)

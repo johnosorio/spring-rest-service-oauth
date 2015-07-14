@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 /**
@@ -16,11 +17,12 @@ import javax.persistence.Table;
  * @author josorio2
  */
 @Entity
-@Table(name="\"oauth_code\"")
+@Table(name="oauth_code")
 public class OAuthCode implements Serializable {
     @Id
     @Column(length = 256)
     private String code;
+    @Lob
     private byte[] authentication;
     
     public OAuthCode() {}

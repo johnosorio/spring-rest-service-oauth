@@ -33,7 +33,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="\"role\"")
+@Table(name="role")
 public class Role implements GrantedAuthority {
 
 	private static final long serialVersionUID = 1L;
@@ -77,5 +77,9 @@ public class Role implements GrantedAuthority {
 	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
-
+        
+        @Override
+        public String toString(){
+            return this.getName();
+        }
 }

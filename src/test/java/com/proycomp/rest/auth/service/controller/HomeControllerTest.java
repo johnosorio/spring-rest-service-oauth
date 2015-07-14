@@ -81,5 +81,4 @@ public class HomeControllerTest {
 			.andExpect(content().string("home"));
 		// @formatter:on
 	}
-
 }

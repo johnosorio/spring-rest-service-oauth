@@ -16,7 +16,7 @@ import javax.persistence.Table;
  * @author josorio2
  */
 @Entity
-@Table(name="\"oauth_client_details\"")
+@Table(name="oauth_client_details")
 public class OAuthClientDetails implements Serializable {
     @Id
     @Column(length = 256, nullable = false)
