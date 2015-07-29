@@ -5,19 +5,6 @@
  */
 package com.proycomp.rest.auth.service;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.client.ClientHttpRequest;
-import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.security.oauth2.client.DefaultOAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.token.DefaultAccessTokenRequest;
@@ -26,47 +13,74 @@ import org.springframework.security.oauth2.client.token.grant.password.ResourceO
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 
 /**
- *
- * @author josorio2
+ * Authorization server test from Java.
+ * 
+ * @author John Jairo Osorio Carmona
  */
 public class Canon {
 
     public static void main(String[] args) {
         
-        ClientCredentialsResourceDetails details = new ClientCredentialsResourceDetails();
-        details.setClientId("curl");
-        details.setClientSecret("password");
-        details.setGrantType("client_credentials");
-        details.setAccessTokenUri("http://localhost:8080/oauth/token");
+        ClientCredentialsResourceDetails clientCredentialsRequest1 = new ClientCredentialsResourceDetails();
+        clientCredentialsRequest1.setClientId("curl");
+        clientCredentialsRequest1.setClientSecret("password");
+        clientCredentialsRequest1.setGrantType("client_credentials");
+        clientCredentialsRequest1.setAccessTokenUri("http://localhost:8080/oauth/token");
         
-        OAuth2RestTemplate template = new OAuth2RestTemplate(details, new DefaultOAuth2ClientContext(new DefaultAccessTokenRequest()));
-        OAuth2AccessToken access = template.getAccessToken();
-        System.out.println("ACCESS: " + access);
-        System.out.println("ACCESS: " + access.getTokenType());
-        System.out.println("ACCESS: " + access.getValue());
-        System.out.println("ACCESS: " + access.getAdditionalInformation());
-        System.out.println("ACCESS: " + access.getExpiration());
-        System.out.println("ACCESS: " + access.getExpiresIn());
-        System.out.println("ACCESS: " + access.getRefreshToken());
-        System.out.println("ACCESS: " + access.getScope());
+        OAuth2RestTemplate templateForClienteCredentials1 = new OAuth2RestTemplate(clientCredentialsRequest1, new DefaultOAuth2ClientContext(new DefaultAccessTokenRequest()));
+        OAuth2AccessToken accessToken1 = templateForClienteCredentials1.getAccessToken();
+        System.out.println("**************************************************************************************");
+        System.out.println("Request Details::: AccessKey: curl, SecretKey: password:, GrantType: cliente_credentials ");
+        System.out.println("**************************************************************************************");
+        System.out.println("Token Type: " + accessToken1.getTokenType());
+        System.out.println("Value: " + accessToken1.getValue());
+        System.out.println("Aditional Information: " + accessToken1.getAdditionalInformation());
+        System.out.println("Expiration: " + accessToken1.getExpiration());
+        System.out.println("Expires In: " + accessToken1.getExpiresIn());
+        System.out.println("Refresh Token: " + accessToken1.getRefreshToken());
+        System.out.println("Scope: " + accessToken1.getScope());
+        System.out.println("**************************************************************************************");
+                
+        ResourceOwnerPasswordResourceDetails clientResourceOwnerPassword = new ResourceOwnerPasswordResourceDetails();
+        clientResourceOwnerPassword.setUsername("roy"); // Username
+        clientResourceOwnerPassword.setPassword("spring"); // Password
+        clientResourceOwnerPassword.setGrantType("password"); 
+        clientResourceOwnerPassword.setClientId("clientapp"); // App AccessKey
+        clientResourceOwnerPassword.setClientSecret("123456"); // App SecretKey
+        clientResourceOwnerPassword.setAccessTokenUri("http://localhost:8080/oauth/token");
         
-        ResourceOwnerPasswordResourceDetails details2 = new ResourceOwnerPasswordResourceDetails();
-        details2.setUsername("roy");
-        details2.setPassword("spring");
-        details2.setGrantType("password");
-        details2.setClientId("clientapp");
-        details2.setClientSecret("123456");
-        details2.setAccessTokenUri("http://localhost:8080/oauth/token");
+        OAuth2RestTemplate templateForResourceOwnerPassword = new OAuth2RestTemplate(clientResourceOwnerPassword, new DefaultOAuth2ClientContext(new DefaultAccessTokenRequest()));
+        OAuth2AccessToken accessToken3 = templateForResourceOwnerPassword.getAccessToken();
+        System.out.println("**************************************************************************************");
+        System.out.println("Request Details::: User: roy, Password: spring:, GrantType: password, AccessKey:clientapp, SecretKey:123456");
+        System.out.println("**************************************************************************************");
+        System.out.println("Token Type: " + accessToken3.getTokenType());
+        System.out.println("Value: " + accessToken3.getValue());
+        System.out.println("Aditional Information: " + accessToken3.getAdditionalInformation());
+        System.out.println("Expiration: " + accessToken3.getExpiration());
+        System.out.println("Expires In: " + accessToken3.getExpiresIn());
+        System.out.println("Refresh Token: " + accessToken3.getRefreshToken());
+        System.out.println("Scope: " + accessToken3.getScope());
+        System.out.println("**************************************************************************************");
         
-        OAuth2RestTemplate template2 = new OAuth2RestTemplate(details2, new DefaultOAuth2ClientContext(new DefaultAccessTokenRequest()));
-        OAuth2AccessToken access2 = template2.getAccessToken();
-        System.out.println("ACCESS2: " + access2);
-        System.out.println("ACCESS2: " + access2.getTokenType());
-        System.out.println("ACCESS2: " + access2.getValue());
-        System.out.println("ACCESS2: " + access2.getAdditionalInformation());
-        System.out.println("ACCESS2: " + access2.getExpiration());
-        System.out.println("ACCESS2: " + access2.getExpiresIn());
-        System.out.println("ACCESS2: " + access2.getRefreshToken());
-        System.out.println("ACCESS2: " + access2.getScope());
+        ClientCredentialsResourceDetails clientCredentialsRequest2 = new ClientCredentialsResourceDetails();
+        clientCredentialsRequest2.setClientId("oauth-admin");
+        clientCredentialsRequest2.setClientSecret("oauth-admin-service-secret-key");
+        clientCredentialsRequest2.setGrantType("client_credentials");
+        clientCredentialsRequest2.setAccessTokenUri("http://localhost:8080/oauth/token");
+        
+        OAuth2RestTemplate templateForClienteCredentials2 = new OAuth2RestTemplate(clientCredentialsRequest2, new DefaultOAuth2ClientContext(new DefaultAccessTokenRequest()));
+        OAuth2AccessToken accessToken2 = templateForClienteCredentials2.getAccessToken();
+        System.out.println("**************************************************************************************");
+        System.out.println("Request Details::: AccessKey: oauth-admin, SecretKey: admin:, GrantType: cliente_credentials ");
+        System.out.println("**************************************************************************************");
+        System.out.println("Token Type: " + accessToken2.getTokenType());
+        System.out.println("Value: " + accessToken2.getValue());
+        System.out.println("Aditional Information: " + accessToken2.getAdditionalInformation());
+        System.out.println("Expiration: " + accessToken2.getExpiration());
+        System.out.println("Expires In: " + accessToken2.getExpiresIn());
+        System.out.println("Refresh Token: " + accessToken2.getRefreshToken());
+        System.out.println("Scope: " + accessToken2.getScope());
+        System.out.println("**************************************************************************************");
     }
 }
