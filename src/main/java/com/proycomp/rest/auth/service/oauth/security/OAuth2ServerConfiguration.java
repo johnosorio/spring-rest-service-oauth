@@ -15,6 +15,7 @@
  */
 package com.proycomp.rest.auth.service.oauth.security;
 
+import com.proycomp.rest.auth.service.token.enhancer.CustomTokenEnhancer;
 import com.proycomp.rest.auth.service.userdetailsservice.CustomUserDetailsService;
 import com.proycomp.rest.auth.service.tokenstore.MyJdbcTokenStore;
 import javax.sql.DataSource;
@@ -36,6 +37,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 import org.springframework.security.oauth2.provider.approval.ApprovalStore;
 import org.springframework.security.oauth2.provider.approval.JdbcApprovalStore;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
 @Configuration
@@ -107,6 +109,7 @@ public class OAuth2ServerConfiguration {
             endpoints.tokenStore(this.tokenStore)
                     .authenticationManager(this.authenticationManager)
                     .approvalStore(approvalStore())
+                    .tokenEnhancer(tokenEnhancer())
                     .userDetailsService(userDetailsService);
             // @formatter:on
         }
@@ -129,9 +132,14 @@ public class OAuth2ServerConfiguration {
             DefaultTokenServices tokenServices = new DefaultTokenServices();
             tokenServices.setSupportRefreshToken(true);
             tokenServices.setTokenStore(this.tokenStore);
+            tokenServices.setTokenEnhancer(tokenEnhancer());
             return tokenServices;
         }
 
+        @Bean
+        public TokenEnhancer tokenEnhancer() {
+            return new CustomTokenEnhancer();
+        }
     }
 
 }
